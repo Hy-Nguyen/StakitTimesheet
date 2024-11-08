@@ -67,3 +67,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  .bg-timesheet {
+    background-color: #b3aec1;
+    transition: background-color 0.3s ease;
+  }
+
+  .dark .bg-timesheet {
+    background-color: #272333;
+    transition: background-color 0.3s ease;
+  }
+}
+
+@layer utilities {
+  .timesheet-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #e9d5ff #00000000;
+  }
+
+  .timesheet-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .timesheet-scrollbar::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  .timesheet-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #e9d5ff;
+    border-radius: 4px;
+    border: 2px solid #000000;
+  }
+
+  .timesheet-scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Webkit browsers like Chrome, Safari */
+  .timesheet-scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

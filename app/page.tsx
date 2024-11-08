@@ -1,4 +1,4 @@
-import CreateListing from '@/features/timesheet/CreateListing/components/CreateListing';
+import CreateListing from '@/features/timesheet/CreateListing/CreateListing';
 import Listings from '@/features/timesheet/listings/components/Listings';
 import Image from 'next/image';
 

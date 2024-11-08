@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import LayoutWrapper from '@/components/layout/LayoutWrapper';
+import NavBar from '@/components/layout/nav/NavBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className + ' bg-timesheet min-h-screen max-w-[100dvw] overflow-x-hidden'}>
+        <NavBar />
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
