@@ -17,12 +17,12 @@ export function DatePicker({ id, date, setDate }: { id: string; date: Date; setD
           variant={'outline'}
           id={id}
           className={cn(
-            'dark:text-mono-100 w-full justify-start border-main-400 bg-main-200 text-left font-normal dark:border-main-400 dark:bg-main',
+            'w-full justify-start border-main-400 bg-main-200 text-left font-normal dark:border-main-400 dark:bg-main dark:text-mono-100',
             !date && 'text-mono-500 dark:text-mono-300'
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, 'PPP') : <span>Pick a date</span>}
+          {date ? format(date, 'PP') : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

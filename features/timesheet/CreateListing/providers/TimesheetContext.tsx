@@ -19,6 +19,9 @@ export interface TimesheetContext {
   setMeetingLink: Dispatch<SetStateAction<string | null>>;
   fileAttachment: string | null;
   setFileAttachment: Dispatch<SetStateAction<string | null>>;
+  resetForm: () => void;
+  errors: SubmissionErrors | null | undefined;
+  setErrors: Dispatch<SetStateAction<SubmissionErrors | null | undefined>>;
 }
 
 export const TimesheetContext = createContext<TimesheetContext>({
@@ -40,6 +43,9 @@ export const TimesheetContext = createContext<TimesheetContext>({
   setMeetingLink: () => {},
   fileAttachment: null,
   setFileAttachment: () => {},
+  resetForm: () => {},
+  errors: null,
+  setErrors: () => {},
 });
 
 export const useTimesheet = () => {
@@ -51,15 +57,22 @@ export const useTimesheet = () => {
 };
 
 export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
+  const todayAtMidnight = new Date();
+  todayAtMidnight.setHours(0, 0, 0, 0);
+  const todayMorning = new Date();
+  todayMorning.setHours(8, 0, 0, 0);
+  const todayNoon = new Date();
+  todayNoon.setHours(12, 0, 0, 0);
   const [title, setTitle] = useState<string | null>(null);
-  const [workDate, setWorkDate] = useState<Date>(new Date());
-  const [startTime, setStartTime] = useState<Date>(new Date());
-  const [endTime, setEndTime] = useState<Date>(new Date());
+  const [workDate, setWorkDate] = useState<Date>(todayAtMidnight);
+  const [startTime, setStartTime] = useState<Date>(todayMorning);
+  const [endTime, setEndTime] = useState<Date>(todayNoon);
   const [duration, setDuration] = useState<string | null>(null);
   const [category, setCategory] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [meetingLink, setMeetingLink] = useState<string | null>(null);
   const [fileAttachment, setFileAttachment] = useState<string | null>(null);
+  const [errors, setErrors] = useState<SubmissionErrors | null | undefined>(null);
 
   useEffect(() => {
     const durationInMs = endTime.getTime() - startTime.getTime();
@@ -69,6 +82,29 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
     const formattedDuration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
     setDuration(formattedDuration);
   }, [startTime, endTime]);
+
+  useEffect(() => {
+    const updateTimesWithNewDate = (time: Date, newDate: Date) => {
+      const updatedTime = new Date(newDate);
+      updatedTime.setHours(time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds());
+      return updatedTime;
+    };
+
+    setStartTime((prevStartTime) => updateTimesWithNewDate(prevStartTime, workDate));
+    setEndTime((prevEndTime) => updateTimesWithNewDate(prevEndTime, workDate));
+  }, [workDate]);
+
+  function resetForm() {
+    setTitle(null);
+    setWorkDate(todayAtMidnight);
+    setStartTime(todayMorning);
+    setEndTime(todayNoon);
+    setDuration(null);
+    setCategory(null);
+    setDescription(null);
+    setMeetingLink(null);
+    setFileAttachment(null);
+  }
 
   return (
     <TimesheetContext.Provider
@@ -91,6 +127,9 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
         setMeetingLink,
         fileAttachment,
         setFileAttachment,
+        resetForm,
+        errors,
+        setErrors,
       }}
     >
       {children}

@@ -16,9 +16,19 @@ export default function TimePicker({
   useCloseDropdown(timePickerRef, () => setIsOpen(false));
 
   const [isOpen, setIsOpen] = useState(false);
-  const [hour, setHour] = useState('12');
-  const [minute, setMinute] = useState('00');
-  const [period, setPeriod] = useState('AM');
+
+  const [hour, setHour] = useState(() => {
+    const hours = selectedTime.getHours();
+    return hours % 12 === 0 ? '12' : String(hours % 12).padStart(2, '0');
+  });
+
+  const [minute, setMinute] = useState(() => {
+    return String(selectedTime.getMinutes()).padStart(2, '0');
+  });
+
+  const [period, setPeriod] = useState(() => {
+    return selectedTime.getHours() >= 12 ? 'PM' : 'AM';
+  });
 
   const hours = Array.from({ length: 12 }, (_, i) => (i < 9 ? `0${i + 1}` : `${i + 1}`));
   const minutes = Array.from({ length: 60 }, (_, i) => (i < 10 ? `0${i}` : `${i}`));
@@ -30,27 +40,31 @@ export default function TimePicker({
   }
 
   useEffect(() => {
-    function createDateFromTime(hour: string, minute: string, period: string): Date {
+    setHour(selectedTime.getHours() % 12 === 0 ? '12' : String(selectedTime.getHours() % 12).padStart(2, '0'));
+    setMinute(String(selectedTime.getMinutes()).padStart(2, '0'));
+    setPeriod(selectedTime.getHours() >= 12 ? 'PM' : 'AM');
+  }, [selectedTime]);
+
+  useEffect(() => {
+    function updateSelectedTime(hour: string, minute: string, period: string) {
       let hours24 = parseInt(hour, 10);
       if (period === 'PM' && hours24 !== 12) {
         hours24 += 12;
       } else if (period === 'AM' && hours24 === 12) {
         hours24 = 0;
       }
-      const date = new Date();
-      date.setHours(hours24, parseInt(minute, 10), 0, 0);
-      return date;
+      selectedTime.setHours(hours24, parseInt(minute, 10), 0, 0);
     }
 
-    const date = createDateFromTime(hour, minute, period);
-    setSelectedTime(date);
+    updateSelectedTime(hour, minute, period);
+    setSelectedTime(new Date(selectedTime)); // Ensure state update
   }, [hour, minute, period]);
 
   return (
-    <div className="relative" ref={timePickerRef}>
+    <div className="relative w-full" ref={timePickerRef}>
       <button
         onClick={handleClick}
-        className="dark:text-mono-100 flex h-10 w-full flex-row items-center justify-start gap-4 rounded-md border border-main-400 bg-main-200 px-4 text-left font-normal dark:border-main-400 dark:bg-main"
+        className="flex h-10 w-full flex-row items-center justify-start gap-4 rounded-md border border-main-400 bg-main-200 px-4 text-left font-normal dark:border-main-400 dark:bg-main dark:text-mono-100"
       >
         <Clock className="h-4 w-4" />
         <TimeInput
@@ -70,7 +84,7 @@ export default function TimePicker({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-0 top-12 grid h-fit w-full grid-cols-3 gap-2 overflow-hidden rounded-md border border-main-400 bg-main-200 p-2 dark:border-main-400 dark:bg-main"
+            className="absolute left-0 top-12 z-10 grid h-fit w-full grid-cols-3 gap-2 overflow-hidden rounded-md border border-main-400 bg-main-200 p-2 dark:border-main-400 dark:bg-main"
           >
             <TimePickerItem listItem={hours} currentState={hour} setState={setHour} />
             <TimePickerItem listItem={minutes} currentState={minute} setState={setMinute} />

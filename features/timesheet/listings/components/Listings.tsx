@@ -21,15 +21,19 @@ export default async function Listings() {
         </thead>
         <tbody>
           {data?.map((entry) => (
-            <tr key={entry.entry_id} className="grid w-full grid-cols-7 gap-4 *:text-center">
+            <tr key={entry.entry_id} className="grid w-full grid-cols-7 items-center gap-4 *:text-center">
               <td>{formatDate(entry.start_time)}</td>
               <td>{formatDate(entry.end_time)}</td>
               <td>{formatDuration(entry.duration)}</td>
               <td>{getCategoryName(entry.category_id)}</td>
               <td>{entry.description}</td>
               <td className="max-w-full truncate">
-                <a href={entry.meeting_link ?? ''} target="_blank">
-                  {'Around Meeting' ?? 'None'}
+                <a
+                  href={entry.meeting_link ?? ''}
+                  className={entry.meeting_link ? 'text-accent-ts underline underline-offset-4' : 'text-gray-500'}
+                  target="_blank"
+                >
+                  {entry.meeting_link ? 'Around Meeting' : 'N/A'}
                 </a>
               </td>
               <td>{entry.file_attachment ?? 'None'}</td>

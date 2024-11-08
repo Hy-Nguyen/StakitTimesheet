@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { getCategories } from '../hooks/getCategoriesClient';
+import { getCategories } from '../../hooks/getCategoriesClient';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useTimesheet } from '../providers/TimesheetContext';
+import { useTimesheet } from '../../providers/TimesheetContext';
 import { useCloseDropdown } from '@/lib/utils';
-export default function CategoryDropdown() {
+import ErrorMessage from './ErrorMessage';
+export default function CategoryDropdown({ error }: { error: string[] | undefined }) {
   const categoryRef = useRef<HTMLDivElement>(null);
   useCloseDropdown(categoryRef, () => setIsOpen(false));
 
@@ -39,10 +40,11 @@ export default function CategoryDropdown() {
         <button
           id="category"
           onClick={handleTrigger}
-          className="dark:text-mono-100 h-10 w-full justify-center rounded-md border border-main-400 bg-main-200 px-2 text-left text-base font-normal placeholder:text-main-500 focus:outline-none dark:border-main-400 dark:bg-main"
+          className="h-10 w-full justify-center rounded-md border border-main-400 bg-main-200 px-2 text-left text-base font-normal placeholder:text-main-500 focus:outline-none dark:border-main-400 dark:bg-main dark:text-mono-100"
         >
           {category ? categories?.find((cat) => cat.category_id === category)?.name : 'Choose a Category'}
         </button>
+        <ErrorMessage error={error} />
       </div>
       <AnimatePresence>
         {isOpen && (
@@ -51,7 +53,7 @@ export default function CategoryDropdown() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-0 top-[5.5rem] flex w-full flex-col gap-2 overflow-hidden rounded-md border border-main-400 bg-main-400 py-2"
+            className="absolute left-0 top-[5.5rem] z-10 flex w-full flex-col gap-2 overflow-hidden rounded-md border border-main-400 bg-main-400 py-2"
           >
             {categories?.map((category) => (
               <button

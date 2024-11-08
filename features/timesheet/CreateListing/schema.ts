@@ -1,12 +1,16 @@
 import { z } from 'zod';
 
-export const createListingSchema = z.object({
+export const SubmissionSchema = z.object({
   user_id: z.string(),
-  start_time: z.string().min(1, { message: 'Start time is required' }),
-  end_time: z.string().min(1, { message: 'End time is required' }),
-  duration: z.string(),
-  category_id: z.string().min(1, { message: 'Category is required' }),
-  description: z.string().min(1, { message: 'Description is required' }),
-  meeting_link: z.string().optional(),
-  file_attachment: z.string().optional(),
+  entry_title: z.string({ message: 'Please enter a title.' }).min(1, { message: 'Please enter a title.' }),
+  start_time: z.string(),
+  end_time: z.string(),
+  category_id: z.string({ message: 'Please select a category.' }).min(1, { message: 'Please select a category.' }),
+  meeting_link: z.string().nullable().optional(),
+  description: z
+    .string({ message: 'Please provide a description.' })
+    .min(1, { message: 'Please provide a description.' }),
+  duration: z
+    .string()
+    .refine((value) => !value.trim().startsWith('-'), { message: 'Please check your start and end time.' }),
 });
