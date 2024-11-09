@@ -20,7 +20,11 @@ export default async function useSortListings() {
 
   // Group listings by date
   const groupedByDate = listings.reduce((acc: { [key: string]: any[] }, listing) => {
-    const date = new Date(listing.start_time).toLocaleDateString();
+    // Convert UTC to MST (UTC-7)
+    const utcDate = new Date(listing.start_time);
+    const mstDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'America/Denver' }));
+    const date = mstDate.toLocaleDateString();
+
     if (!acc[date]) {
       acc[date] = [];
     }
