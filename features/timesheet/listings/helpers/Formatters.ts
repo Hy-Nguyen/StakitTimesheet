@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 
 export function formatDuration(duration: string) {
+  if (!duration) return 'Unfinished';
   const [hours, minutes, seconds] = duration.split(':').map(Number);
   return `${hours} hr ${minutes} min`;
 }
@@ -20,9 +21,6 @@ export async function getCategoryName(category_id: string) {
 
 export function formatDate(date: string) {
   const options: Intl.DateTimeFormatOptions = {
-    month: 'numeric',
-    day: 'numeric',
-    year: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
     hour12: true,
