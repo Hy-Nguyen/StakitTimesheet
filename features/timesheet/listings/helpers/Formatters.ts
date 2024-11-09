@@ -24,6 +24,7 @@ export function formatDate(date: string) {
     hour: 'numeric',
     minute: 'numeric',
     hour12: true,
+    timeZone: 'MST',
   };
 
   return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
