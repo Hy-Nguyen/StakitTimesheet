@@ -14,6 +14,7 @@ export async function getTotalHours() {
   let totalSeconds = 0;
 
   entries?.forEach((entry) => {
+    if (!entry.duration) return;
     const [hours, minutes, seconds] = entry.duration.split(':').map(Number);
     totalHours += hours;
     totalMinutes += minutes;
