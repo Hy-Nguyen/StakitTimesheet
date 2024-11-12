@@ -8,7 +8,7 @@ export default function ErrorMessage({ error }: { error: string[] | undefined })
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          key={error[0] ?? 'error'}
+          key={error[0] ?? 'error' + Math.random()}
           className="overflow-hidden text-red-400"
         >
           {error}

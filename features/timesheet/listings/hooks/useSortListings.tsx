@@ -29,28 +29,49 @@ export default async function useSortListings() {
       acc[date] = [];
     }
     acc[date].push(listing);
+
     return acc;
   }, {});
 
   // Convert the grouped object into an array with date, entries, and total duration
-  const sortedListings = Object.entries(groupedByDate)
-    .map(([date, entries]) => {
+  const sortedListings = await Promise.all(
+    Object.entries(groupedByDate).map(async ([date, entries]) => {
       // Calculate total duration for this date
       const totalMinutes = entries.reduce((sum, entry) => {
         if (entry.duration) {
-          const [hours, minutes] = entry.duration.split(':');
           return sum + durationToMinutes(entry.duration);
         }
         return sum;
       }, 0);
 
+      // Add category_name to each entry
+      const entriesWithCategoryName = await Promise.all(
+        entries.map(async (entry) => ({
+          ...entry,
+          category_name: await getCategoryName(entry.category_id),
+        }))
+      );
+
       return {
         date,
-        entries,
+        entries: entriesWithCategoryName,
         netHours: minutesToDuration(totalMinutes),
       };
     })
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  );
 
   return sortedListings;
+}
+
+export async function getCategories() {
+  const supabase = await createClient();
+  const { data } = await supabase.from('timesheet_categories').select('*');
+  return data;
+}
+
+export async function getCategoryName(category_id: string) {
+  const categories = await getCategories();
+
+  const category = categories?.find((c) => c.category_id === category_id);
+  return category?.name;
 }
