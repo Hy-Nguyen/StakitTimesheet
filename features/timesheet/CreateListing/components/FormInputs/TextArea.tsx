@@ -29,7 +29,7 @@ export default function TextArea({
         name={props.id}
         onChange={(e) => setValue(e.target.value)}
         className={cn(
-          'w-full grow resize-none justify-start rounded-md border border-main-400 bg-main-200 p-2 text-left text-base font-normal placeholder:text-main-200 focus:outline-none dark:border-main-400 dark:bg-main dark:text-mono-100',
+          'w-full grow resize-none justify-start rounded-md border border-border bg-secondary p-2 text-left text-base font-normal text-secondary-foreground focus:outline-none',
           inputClassName
         )}
         {...props}

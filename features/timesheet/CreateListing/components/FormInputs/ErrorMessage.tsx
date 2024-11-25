@@ -9,7 +9,7 @@ export default function ErrorMessage({ error }: { error: string[] | undefined })
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
           key={error[0] ?? 'error' + Math.random()}
-          className="overflow-hidden text-red-400"
+          className="overflow-hidden text-red-500"
         >
           {error}
         </motion.p>

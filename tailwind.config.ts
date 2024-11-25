@@ -73,7 +73,8 @@ const config = {
           '600': '#3A383E',
           '700': '#1B1A1E',
         },
-        'accent-ts': '#786FB7',
+        'accent-ts': { DEFAULT: '#786FB7', '100': '#E8E5F9' },
+        'new-main': { DEFAULT: '#6737F5', '100': '#E8E5F9' },
       },
       borderRadius: {
         lg: 'var(--radius)',

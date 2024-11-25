@@ -4,10 +4,10 @@ import Overview from '@/features/timesheet/Overview/components/Overview';
 
 export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center gap-4 p-24">
+    <main className="flex min-h-screen  flex-col items-center gap-4 p-24">
       <CreateListing />
       <Listings />
-      <Overview />
+      {/* <Overview /> */}
     </main>
   );
 }

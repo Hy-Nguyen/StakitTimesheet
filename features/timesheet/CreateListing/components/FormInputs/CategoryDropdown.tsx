@@ -40,7 +40,7 @@ export default function CategoryDropdown({ error }: { error: string[] | undefine
         <button
           id="category"
           onClick={handleTrigger}
-          className="h-10 w-full justify-center rounded-md border border-main-400 bg-main-200 px-2 text-left text-base font-normal placeholder:text-main-500 focus:outline-none dark:border-main-400 dark:bg-main dark:text-mono-100"
+          className="h-10 w-full justify-center rounded-md border border-border bg-secondary px-2 text-left text-base font-normal text-secondary-foreground focus:outline-none"
         >
           {category ? categories?.find((cat) => cat.category_id === category)?.name : 'Choose a Category'}
         </button>
@@ -53,11 +53,11 @@ export default function CategoryDropdown({ error }: { error: string[] | undefine
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-0 top-[5.5rem] z-10 flex w-full flex-col gap-2 overflow-hidden rounded-md border border-main-400 bg-main-400 py-2"
+            className="absolute left-0 top-[5.5rem] z-10 flex w-full flex-col gap-2 overflow-hidden rounded-md border border-border bg-secondary py-2"
           >
             {categories?.map((category) => (
               <button
-                className={`w-full bg-inherit py-1.5 transition-colors duration-200 hover:bg-main-300`}
+                className={`w-full bg-inherit py-1.5 transition-colors duration-200 hover:bg-white/10`}
                 key={category.category_id}
                 onClick={(e) => {
                   e.preventDefault();

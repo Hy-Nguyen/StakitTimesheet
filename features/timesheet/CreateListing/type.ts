@@ -27,3 +27,26 @@ interface SubmissionErrors {
   description?: string[] | undefined;
   duration?: string[] | undefined;
 }
+
+interface Listing {
+  date: string;
+  entries: Entry[];
+  netHours: string;
+}
+type Tab = 'month' | 'day' | 'week';
+
+interface Entry {
+  entry_id: string;
+  user_id: string;
+  entry_title: string;
+  start_time: string;
+  end_time: string;
+  duration: string;
+  category_id: string;
+  description: string;
+  meeting_link?: null;
+  file_attachment?: null;
+  is_active?: boolean;
+  created_at: string;
+  category_name: string;
+}

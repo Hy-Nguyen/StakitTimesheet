@@ -64,7 +64,7 @@ export default function TimePicker({
     <div className="relative w-full" ref={timePickerRef}>
       <button
         onClick={handleClick}
-        className="flex h-10 w-full flex-row items-center justify-start gap-4 rounded-md border border-main-400 bg-main-200 px-4 text-left font-normal dark:border-main-400 dark:bg-main dark:text-mono-100"
+        className="flex h-10 w-full flex-row items-center justify-start gap-4 rounded-md border border-border bg-secondary px-4 text-left font-normal text-secondary-foreground"
       >
         <Clock className="h-4 w-4" />
         <TimeInput
@@ -84,7 +84,7 @@ export default function TimePicker({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-0 top-12 z-10 grid h-fit w-full grid-cols-3 gap-2 overflow-hidden rounded-md border border-main-400 bg-main-200 p-2 dark:border-main-400 dark:bg-main"
+            className="absolute left-0 top-12 z-10 grid h-fit w-full grid-cols-3 gap-2 overflow-hidden rounded-md border border-border bg-secondary p-2"
           >
             <TimePickerItem listItem={hours} currentState={hour} setState={setHour} />
             <TimePickerItem listItem={minutes} currentState={minute} setState={setMinute} />

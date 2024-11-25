@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + ' bg-timesheet min-h-screen max-w-[100dvw] overflow-x-hidden'}>
+      <body className={inter.className + ' min-h-screen max-w-[100dvw] overflow-x-hidden bg-background'}>
         <NavBar />
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>

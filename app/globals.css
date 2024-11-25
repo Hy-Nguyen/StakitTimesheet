@@ -70,7 +70,7 @@
 
 @layer base {
   .bg-timesheet {
-    background-color: #b3aec1;
+    background-color: #fbfbfb;
     transition: background-color 0.3s ease;
   }
 

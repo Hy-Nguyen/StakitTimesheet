@@ -28,7 +28,7 @@ export default function TimePickerItem({
           ref={currentState === item ? selectedRef : null}
           className={cn(
             'cursor-pointer rounded-sm bg-inherit py-1 text-center transition-colors duration-200 hover:bg-white/10',
-            currentState === item && 'bg-white/10 text-black dark:text-purple-200'
+            currentState === item && 'bg-white/10 text-black dark:text-purple-300'
           )}
           onClick={() => setState(item)}
           key={item}

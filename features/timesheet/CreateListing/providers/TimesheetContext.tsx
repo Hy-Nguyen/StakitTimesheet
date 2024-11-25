@@ -22,6 +22,10 @@ export interface TimesheetContext {
   resetForm: () => void;
   errors: SubmissionErrors | null | undefined;
   setErrors: Dispatch<SetStateAction<SubmissionErrors | null | undefined>>;
+  currentTab: Tab;
+  setCurrentTab: Dispatch<SetStateAction<Tab>>;
+  listings: Listing[];
+  setListings: Dispatch<SetStateAction<Listing[]>>;
 }
 
 export const TimesheetContext = createContext<TimesheetContext>({
@@ -46,6 +50,10 @@ export const TimesheetContext = createContext<TimesheetContext>({
   resetForm: () => {},
   errors: null,
   setErrors: () => {},
+  currentTab: 'day',
+  setCurrentTab: () => {},
+  listings: [],
+  setListings: () => {},
 });
 
 export const useTimesheet = () => {
@@ -73,6 +81,8 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
   const [meetingLink, setMeetingLink] = useState<string | null>(null);
   const [fileAttachment, setFileAttachment] = useState<string | null>(null);
   const [errors, setErrors] = useState<SubmissionErrors | null | undefined>(null);
+  const [currentTab, setCurrentTab] = useState<Tab>('day');
+  const [listings, setListings] = useState<Listing[]>([]);
 
   useEffect(() => {
     const durationInMs = endTime.getTime() - startTime.getTime();
@@ -130,6 +140,10 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
         resetForm,
         errors,
         setErrors,
+        currentTab,
+        setCurrentTab,
+        listings,
+        setListings,
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 
-export default async function useSortListings() {
+export default async function getSortedListings(): Promise<Listing[]> {
   const supabase = await createClient();
   const { data: listings, error } = await supabase.from('timesheet_time_entries').select('*');
   if (!listings) return [];

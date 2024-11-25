@@ -3,27 +3,31 @@
 import { useState } from 'react';
 import CreateTimeSheetForm from './components/CreateTimeSheetForm';
 
-import { TimesheetProvider } from './providers/TimesheetContext';
 export default function CreateListing() {
   const [view, setView] = useState<'start' | 'create'>('create');
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="container flex w-full flex-col gap-6 rounded-md px-0 text-black dark:text-white">
+    <div className="container flex w-full flex-row items-center justify-between gap-6 rounded-md px-0 text-black dark:text-white">
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white">New Timesheet Entry</h2>
       <div className="flex flex-row gap-4">
         <button
-          className={`rounded-md border border-black p-2 transition-colors duration-200 ${view === 'start' ? 'bg-accent-ts' : 'hover:bg-accent-ts/25'}`}
+          className={`rounded-md border p-2 transition-colors duration-200 ${view === 'start' ? 'bg-primary text-primary-foreground' : 'border-border bg-primary-foreground text-black hover:bg-primary/25 dark:text-white'}`}
           onClick={() => setView('start')}
         >
           Start
         </button>
         <button
-          className={`rounded-md border border-black p-2 transition-colors duration-200 ${view === 'create' ? 'bg-accent-ts' : 'hover:bg-accent-ts/25'}`}
-          onClick={() => setView('create')}
+          className={`rounded-md border p-2 transition-colors duration-200 ${view === 'create' ? 'bg-primary text-primary-foreground' : 'border-border bg-primary-foreground text-black hover:bg-primary/25 dark:text-white'}`}
+          onClick={() => {
+            setIsOpen((prev) => !prev);
+            setView('create');
+          }}
         >
           Create
         </button>
       </div>
-      <TimesheetProvider>{view === 'create' ? <CreateTimeSheetForm /> : <div>Start</div>}</TimesheetProvider>
+
+      {view === 'create' ? <CreateTimeSheetForm isOpen={isOpen} setIsOpen={setIsOpen} /> : <div>Start</div>}
     </div>
   );
 }
