@@ -81,7 +81,7 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
   const [meetingLink, setMeetingLink] = useState<string | null>(null);
   const [fileAttachment, setFileAttachment] = useState<string | null>(null);
   const [errors, setErrors] = useState<SubmissionErrors | null | undefined>(null);
-  const [currentTab, setCurrentTab] = useState<Tab>('day');
+  const [currentTab, setCurrentTab] = useState<Tab>('month');
   const [listings, setListings] = useState<Listing[]>([]);
 
   useEffect(() => {

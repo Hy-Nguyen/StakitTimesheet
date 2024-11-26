@@ -50,3 +50,15 @@ interface Entry {
   created_at: string;
   category_name: string;
 }
+
+
+interface MonthlyReport {
+  totalTime: {
+    hours: string;
+    minutes: string;
+  };
+  month: number;
+  year: number;
+  daysWorked: number;
+  avgHourPerDay: string;
+}

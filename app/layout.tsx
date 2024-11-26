@@ -7,8 +7,8 @@ import NavBar from '@/components/layout/nav/NavBar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'NextJS Template - Hy Nguyen',
-  description: 'NextJS Template - Hy Nguyen',
+  title: 'Stakit Timesheet',
+  description: 'Stakit Timesheet for Hy',
 };
 
 export default function RootLayout({

@@ -4,15 +4,17 @@ import { useTimesheet } from '../../CreateListing/providers/TimesheetContext';
 import Tabs from './tabs/Tabs';
 import ViewManager from './views/ViewManager';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function Listings() {
   const { setListings } = useTimesheet();
   useEffect(() => {
     const getListings = async () => {
-      let sortedListings: { data: Listing[] } = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/getSortedListings`
-      ).then((res) => res.json());
+      let sortedListings: { data: Listing[] } = await axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/getSortedListings`)
+        .then((res) => res.data);
       setListings(sortedListings.data);
+      console.log(sortedListings.data);
     };
     getListings();
   }, []);
