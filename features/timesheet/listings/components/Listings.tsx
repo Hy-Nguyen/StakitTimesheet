@@ -7,13 +7,14 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 export default function Listings() {
-  const { setListings } = useTimesheet();
+  const { setListings, setEntries } = useTimesheet();
   useEffect(() => {
     const getListings = async () => {
       let sortedListings: { data: Listing[] } = await axios
         .get(`${process.env.NEXT_PUBLIC_API_URL}/getSortedListings`)
         .then((res) => res.data);
       setListings(sortedListings.data);
+      setEntries(sortedListings.data.flatMap((listing) => listing.entries));
       console.log(sortedListings.data);
     };
     getListings();

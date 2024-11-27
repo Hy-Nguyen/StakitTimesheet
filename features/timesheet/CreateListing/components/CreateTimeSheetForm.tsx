@@ -111,7 +111,7 @@ export default function CreateTimeSheetForm({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="container relative flex flex-col gap-4 rounded-lg border border-border bg-black p-8 lg:max-w-[1000px]">
+          <div className="container relative flex flex-col gap-4 rounded-lg border border-border bg-primary-foreground dark:bg-black p-8 lg:max-w-[1000px]">
             <button
               className="absolute right-4 top-4 h-fit w-fit rounded-full bg-inherit p-1 transition-colors duration-200 hover:bg-white/10"
               onClick={(e) => {

@@ -26,6 +26,8 @@ export interface TimesheetContext {
   setCurrentTab: Dispatch<SetStateAction<Tab>>;
   listings: Listing[];
   setListings: Dispatch<SetStateAction<Listing[]>>;
+  entries: Entry[];
+  setEntries: Dispatch<SetStateAction<Entry[]>>;
 }
 
 export const TimesheetContext = createContext<TimesheetContext>({
@@ -54,6 +56,8 @@ export const TimesheetContext = createContext<TimesheetContext>({
   setCurrentTab: () => {},
   listings: [],
   setListings: () => {},
+  entries: [],
+  setEntries: () => {},
 });
 
 export const useTimesheet = () => {
@@ -83,7 +87,7 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
   const [errors, setErrors] = useState<SubmissionErrors | null | undefined>(null);
   const [currentTab, setCurrentTab] = useState<Tab>('month');
   const [listings, setListings] = useState<Listing[]>([]);
-
+  const [entries, setEntries] = useState<Entry[]>([]);
   useEffect(() => {
     const durationInMs = endTime.getTime() - startTime.getTime();
     const hours = Math.floor(durationInMs / (1000 * 60 * 60));
@@ -144,6 +148,8 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
         setCurrentTab,
         listings,
         setListings,
+        entries,
+        setEntries,
       }}
     >
       {children}
