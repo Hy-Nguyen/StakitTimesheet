@@ -1,16 +1,13 @@
-import { useState } from 'react';
-import { format } from 'date-fns';
 import { useTimesheet } from '@/features/timesheet/CreateListing/providers/TimesheetContext';
 import { convertTimeToMinutes } from '@/lib/utils';
-import EntryCard from './EntryCard';
+import { format } from 'date-fns';
 import { motion } from 'framer-motion';
+import EntryCard from './EntryCard';
 export default function DayView() {
-  const [date, setDate] = useState(new Date());
-  const { entries } = useTimesheet();
-  let todayEntries = entries.filter((entry) => new Date(entry.start_time).getDate() === date.getDate());
-  console.log(todayEntries);
+  const { entries, selectedDate: date } = useTimesheet();
+  const todayEntries = entries.filter((entry) => new Date(entry.start_time).getDate() === date.getDate());
+  const totalHours = todayEntries.reduce((acc, entry) => acc + convertTimeToMinutes(entry.duration) / 60, 0);
 
-  let totalHours = todayEntries.reduce((acc, entry) => acc + convertTimeToMinutes(entry.duration) / 60, 0);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -28,9 +25,11 @@ export default function DayView() {
       </div>
       {/* Entries */}
       <div className="flex w-full flex-col gap-2">
-        {todayEntries.map((entry) => (
-          <EntryCard key={entry.entry_id} entry={entry} />
-        ))}
+        {todayEntries.length > 0 ? (
+          todayEntries.map((entry) => <EntryCard key={entry.entry_id} entry={entry} />)
+        ) : (
+          <p className="text-center text-lg font-medium">No entries for this day</p>
+        )}
       </div>
     </motion.div>
   );

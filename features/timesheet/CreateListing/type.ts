@@ -51,7 +51,6 @@ interface Entry {
   category_name: string;
 }
 
-
 interface MonthlyReport {
   totalTime: {
     hours: string;
@@ -61,4 +60,9 @@ interface MonthlyReport {
   year: number;
   daysWorked: number;
   avgHourPerDay: string;
+}
+
+interface Category {
+  category_id: string;
+  name: string;
 }

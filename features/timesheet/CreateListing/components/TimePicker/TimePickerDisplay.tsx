@@ -152,7 +152,7 @@ export default function TimeInput({
     text-center text-base 
     border-none outline-none ring-0
     focus:border-none focus:outline-none focus:ring-0 
-    transition-all duration-200
+    transition-all duration-500
     bg-inherit text-inherit placeholder:text-inherit
   `;
 

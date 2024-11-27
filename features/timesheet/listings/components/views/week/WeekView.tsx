@@ -7,10 +7,8 @@ import { useTimesheet } from '@/features/timesheet/CreateListing/providers/Times
 import { convertTimeToMinutes } from '@/lib/utils';
 import { motion } from 'framer-motion';
 export default function WeekView() {
-  const [date, setDate] = useState(new Date());
   const [displayedDate, setDisplayedDate] = useState(new Date());
-
-  const { entries } = useTimesheet();
+  const { entries, selectedDate: date, setSelectedDate: setDate, setCurrentTab } = useTimesheet();
 
   const weekStart = startOfWeek(displayedDate, { weekStartsOn: 0 });
   const weekEnd = endOfWeek(displayedDate, { weekStartsOn: 0 });
@@ -74,7 +72,10 @@ export default function WeekView() {
                   key={day.toISOString()}
                   variant={isSelected ? 'default' : isToday(day) ? 'secondary' : 'outline'}
                   className="w-full justify-between"
-                  onClick={() => handleDaySelect(day)}
+                  onClick={() => {
+                    handleDaySelect(day);
+                    setCurrentTab('day');
+                  }}
                 >
                   <span>{format(day, 'EEEE, MMM d')}</span>
                   <span>{dayHours.toFixed(1)} hours</span>

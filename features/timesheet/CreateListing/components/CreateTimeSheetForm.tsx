@@ -37,7 +37,14 @@ export default function CreateTimeSheetForm({
     errors,
     setErrors,
     duration,
+    resetEntry,
   } = useTimesheet();
+
+  function handleClose() {
+    setIsOpen(false);
+    resetEntry();
+    resetForm();
+  }
 
   const [isSending, setIsSending] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -111,12 +118,12 @@ export default function CreateTimeSheetForm({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="container relative flex flex-col gap-4 rounded-lg border border-border bg-primary-foreground dark:bg-black p-8 lg:max-w-[1000px]">
+          <div className="container relative flex flex-col gap-4 rounded-lg border border-border bg-primary-foreground p-8 dark:bg-black lg:max-w-[1000px]">
             <button
-              className="absolute right-4 top-4 h-fit w-fit rounded-full bg-inherit p-1 transition-colors duration-200 hover:bg-white/10"
+              className="absolute right-4 top-4 h-fit w-fit rounded-full bg-inherit p-1 transition-colors duration-500 hover:bg-white/10"
               onClick={(e) => {
                 e.preventDefault();
-                setIsOpen(false);
+                handleClose();
               }}
             >
               <X className="h-4 w-4" />
@@ -156,7 +163,7 @@ export default function CreateTimeSheetForm({
               </div>
               <button
                 type="submit"
-                className="col-span-4 rounded-md bg-primary py-2 text-primary-foreground transition-colors duration-200 hover:bg-primary/25 disabled:cursor-wait disabled:bg-main-300 disabled:text-black"
+                className="col-span-4 rounded-md bg-primary py-2 text-primary-foreground transition-colors duration-500 hover:bg-primary/25 disabled:cursor-wait disabled:bg-main-300 disabled:text-black"
                 disabled={isSending}
               >
                 {isSending ? 'Sending...' : 'Submit'}

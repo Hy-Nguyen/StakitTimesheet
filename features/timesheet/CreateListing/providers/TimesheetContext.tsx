@@ -28,6 +28,13 @@ export interface TimesheetContext {
   setListings: Dispatch<SetStateAction<Listing[]>>;
   entries: Entry[];
   setEntries: Dispatch<SetStateAction<Entry[]>>;
+  selectedDate: Date;
+  setSelectedDate: Dispatch<SetStateAction<Date>>;
+  monthlyReport: MonthlyReport | null;
+  setMonthlyReport: Dispatch<SetStateAction<MonthlyReport | null>>;
+  categories: Category[];
+  setCategories: Dispatch<SetStateAction<Category[]>>;
+  resetEntry: () => void;
 }
 
 export const TimesheetContext = createContext<TimesheetContext>({
@@ -58,6 +65,13 @@ export const TimesheetContext = createContext<TimesheetContext>({
   setListings: () => {},
   entries: [],
   setEntries: () => {},
+  selectedDate: new Date(),
+  setSelectedDate: () => {},
+  monthlyReport: null,
+  setMonthlyReport: () => {},
+  categories: [],
+  setCategories: () => {},
+  resetEntry: () => {},
 });
 
 export const useTimesheet = () => {
@@ -88,6 +102,21 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
   const [currentTab, setCurrentTab] = useState<Tab>('month');
   const [listings, setListings] = useState<Listing[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [monthlyReport, setMonthlyReport] = useState<MonthlyReport | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  function resetEntry() {
+    setTitle(null);
+    setWorkDate(todayAtMidnight);
+    setStartTime(todayMorning);
+    setEndTime(todayNoon);
+    setDuration(null);
+    setCategory(null);
+    setDescription(null);
+    setMeetingLink(null);
+    setFileAttachment(null);
+  }
   useEffect(() => {
     const durationInMs = endTime.getTime() - startTime.getTime();
     const hours = Math.floor(durationInMs / (1000 * 60 * 60));
@@ -150,6 +179,13 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
         setListings,
         entries,
         setEntries,
+        selectedDate,
+        setSelectedDate,
+        monthlyReport,
+        setMonthlyReport,
+        categories,
+        setCategories,
+        resetEntry,
       }}
     >
       {children}

@@ -7,13 +7,11 @@ import { useTimesheet } from '../../providers/TimesheetContext';
 import { useCloseDropdown } from '@/lib/utils';
 import ErrorMessage from './ErrorMessage';
 export default function CategoryDropdown({ error }: { error: string[] | undefined }) {
+  const { categories, setCategories, category, setCategory } = useTimesheet();
+  const [isOpen, setIsOpen] = useState(false);
+
   const categoryRef = useRef<HTMLDivElement>(null);
   useCloseDropdown(categoryRef, () => setIsOpen(false));
-
-  const { category, setCategory } = useTimesheet();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [categories, setCategories] = useState<any[] | null>([]);
 
   useEffect(() => {
     async function fetchCat() {
@@ -24,9 +22,10 @@ export default function CategoryDropdown({ error }: { error: string[] | undefine
         console.error(error);
       }
     }
-
-    fetchCat();
-  }, []);
+    if (categories.length === 0) {
+      fetchCat();
+    }
+  }, [setCategories, categories]);
 
   function handleTrigger(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -57,7 +56,7 @@ export default function CategoryDropdown({ error }: { error: string[] | undefine
           >
             {categories?.map((category) => (
               <button
-                className={`w-full bg-inherit py-1.5 transition-colors duration-200 hover:bg-white/10`}
+                className={`w-full bg-inherit py-1.5 transition-colors duration-500 hover:bg-white/10`}
                 key={category.category_id}
                 onClick={(e) => {
                   e.preventDefault();

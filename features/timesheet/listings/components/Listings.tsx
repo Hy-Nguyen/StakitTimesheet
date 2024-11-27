@@ -7,7 +7,8 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 export default function Listings() {
-  const { setListings, setEntries } = useTimesheet();
+  const { listings, setListings, entries, setEntries } = useTimesheet();
+
   useEffect(() => {
     const getListings = async () => {
       let sortedListings: { data: Listing[] } = await axios
@@ -15,10 +16,11 @@ export default function Listings() {
         .then((res) => res.data);
       setListings(sortedListings.data);
       setEntries(sortedListings.data.flatMap((listing) => listing.entries));
-      console.log(sortedListings.data);
     };
-    getListings();
-  }, []);
+    if (listings.length === 0 || entries.length === 0) {
+      getListings();
+    }
+  }, [entries, listings]);
 
   return (
     <div className="container flex w-full flex-col gap-4 px-0">
@@ -27,34 +29,3 @@ export default function Listings() {
     </div>
   );
 }
-
-// async function Save() {
-//   let sortedListings = await useSortListings();
-
-//   return (
-//     <div className="container w-full rounded-md border border-border p-4 text-black text-primary">
-//       <table className="w-full">
-//         <thead>
-//           <TableHeader />
-//         </thead>
-//         <tbody className="flex flex-col gap-2">
-//           {sortedListings.map((listing) => (
-//             <>
-//               <tr
-//                 key={listing.date + Math.random()}
-//                 className="grid w-full grid-cols-7 items-center gap-4 *:text-center"
-//               >
-//                 <td className="col-span-full flex flex-row items-center gap-4 border-b border-main-200 py-2 text-2xl">
-//                   <h1>Date: {listing.date}</h1> |<h1> Hours: {formatDuration(listing.netHours)}</h1>
-//                 </td>
-//               </tr>
-//               {listing.entries.map((entry: any) => (
-//                 <ListingItem key={entry.entry_id} entry={entry} />
-//               ))}
-//             </>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// }

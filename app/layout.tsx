@@ -18,7 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + ' min-h-screen max-w-[100dvw] overflow-x-hidden bg-background'}>
+      <body
+        className={
+          inter.className +
+          ' min-h-screen max-w-[100dvw] overflow-x-hidden bg-background transition-colors duration-500 ease-in-out'
+        }
+      >
         <NavBar />
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>

@@ -1,25 +1,63 @@
-import { formatDuration, formatDate } from '../../../helpers/Formatters';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+'use client';
 
+import { useState } from 'react';
+import { formatDuration, formatDate } from '../../../helpers/Formatters';
+import { ChevronDown } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 export default function EntryCard({ entry }: { entry: Entry }) {
+  const [expanded, setExpanded] = useState(false);
   return (
-    // <Card className="flex w-full flex-col items-start">
-    //   <CardHeader>
-    //     <CardTitle>{entry.entry_title}</CardTitle>
-    //   </CardHeader>
-    //   <CardContent>
-    //     <p>{formatDate(entry.start_time)}</p>
-    //     <p>{formatDuration(entry.duration)}</p>
-    //   </CardContent>
-    // </Card>
-    <div className="flex w-full flex-col items-start rounded-md border border-border p-4">
-      <div className="flex w-full flex-row items-start justify-between">
-        <h1 className="text-lg font-semibold">{entry.entry_title}</h1>
-        <p className="text-sm font-normal text-muted-foreground">{formatDuration(entry.duration)}</p>
+    <div className="flex w-full flex-col items-center justify-between rounded-md border border-border">
+      <div className="flex w-full flex-row items-center justify-between gap-2 p-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-lg font-semibold">{entry.entry_title}</h1>
+          <p className="text-sm font-normal text-muted-foreground">
+            {formatDate(entry.start_time)} - {formatDate(entry.end_time)}
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-right text-sm font-normal">{formatDuration(entry.duration)}</p>
+          <p className="text-sm font-normal text-muted-foreground">{entry.category_name}</p>
+        </div>
       </div>
-      <p className="text-sm font-normal text-muted-foreground">
-        {formatDate(entry.start_time)} - {formatDate(entry.end_time)}
-      </p>
+      <AnimatePresence mode="wait">
+        {expanded && (
+          <motion.div
+            key={entry.entry_id}
+            style={{ overflow: 'hidden' }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'fit-content' }}
+            exit={{ opacity: 0, height: 0 }}
+            // transition={{ duration: 0.2, ease: 'easeInOut' }}
+            className="flex w-full flex-col items-start gap-2 px-4 pb-2"
+          >
+            <h2 className="text-sm font-semibold">Description:</h2>
+            <p className="line-clamp-4 text-sm font-normal text-muted-foreground">{entry.description}</p>
+            <h2 className="text-sm font-semibold">
+              Meeting Link:
+              {entry.meeting_link ? (
+                <a
+                  href={entry.meeting_link}
+                  target="_blank"
+                  className="pl-2 text-sm font-normal text-muted-foreground underline underline-offset-2"
+                >
+                  Meeting Recording
+                </a>
+              ) : (
+                <span className="pl-2 text-sm font-normal text-muted-foreground">No Meeting Link</span>
+              )}
+            </h2>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Expand Button */}
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex w-full flex-row items-center justify-center rounded-b-md bg-inherit py-1 transition-colors duration-500 ease-in-out hover:bg-muted"
+      >
+        <ChevronDown className={`transition-transform duration-500 ease-in-out ${expanded ? 'rotate-180' : ''}`} />
+      </button>
     </div>
   );
 }

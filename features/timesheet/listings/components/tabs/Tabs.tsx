@@ -17,14 +17,14 @@ export default function Tabs() {
   // Calculate the position of the sliding indicator
   const activeIndex = tabs.findIndex((tab) => tab.value === currentTab);
   const indicatorStyle = {
-    left: `calc(${activeIndex * (100 / tabs.length)}% + 4px)`,
+    left: `calc(${activeIndex * (100 / tabs.length)}% ${activeIndex === 0 ? '+ 4px' : ''})`,
     width: `calc(${100 / tabs.length}% - 4px)`,
   };
 
   return (
     <div className="relative flex w-full flex-row rounded-md border border-border bg-muted p-1">
       <div
-        className="absolute h-[calc(100%-0.5rem)] rounded-md bg-primary-foreground shadow transition-all duration-300 ease-in-out"
+        className="absolute h-[calc(100%-0.5rem)] w-full rounded-md bg-primary-foreground shadow transition-all duration-500 ease-in-out"
         style={indicatorStyle}
       />
       {tabs.map((tab) => (
@@ -38,7 +38,7 @@ function TabButtons({ tab, selectedTab, label }: { tab: Tab; selectedTab: Tab; l
   const { setCurrentTab } = useTimesheet();
   return (
     <button
-      className={`relative flex-1 rounded-md py-2 text-center text-primary transition-colors ${
+      className={`relative w-1/3 rounded-md py-2 text-center text-primary transition-colors ${
         !(selectedTab === tab) && 'hover:text-muted-foreground'
       }`}
       onClick={() => {

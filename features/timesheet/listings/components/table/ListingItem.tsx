@@ -4,7 +4,7 @@ import EditListingPopUp from './EditListingPopUp';
 export default function ListingItem({ entry }: { entry: any }) {
   return (
     <>
-      <tr className="relative grid w-full grid-cols-7 items-center gap-4 rounded-md border py-1 transition-colors duration-200 *:text-center hover:cursor-pointer dark:border-transparent dark:hover:border-accent-ts">
+      <tr className="relative grid w-full grid-cols-7 items-center gap-4 rounded-md border py-1 transition-colors duration-500 *:text-center hover:cursor-pointer dark:border-transparent dark:hover:border-accent-ts">
         <td>{formatDate(entry.start_time)}</td>
         <td>{formatDate(entry.end_time)}</td>
         <td>{formatDuration(entry.duration)}</td>

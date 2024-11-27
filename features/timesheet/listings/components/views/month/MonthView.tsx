@@ -3,8 +3,9 @@ import { LoaderCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import MonthSelector from './MonthSelector';
 import { motion } from 'framer-motion';
+import { useTimesheet } from '@/features/timesheet/CreateListing/providers/TimesheetContext';
 export default function MonthView() {
-  const [monthlyReport, setMonthlyReport] = useState<MonthlyReport | null>(null);
+  const { monthlyReport, setMonthlyReport } = useTimesheet();
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
@@ -15,9 +16,13 @@ export default function MonthView() {
       });
       setMonthlyReport(response.data);
       setIsFetching(false);
+      return;
     };
-    getMonthlyReport();
-  }, []);
+    if (!monthlyReport) {
+      getMonthlyReport();
+    }
+    setIsFetching(false);
+  }, [monthlyReport, setMonthlyReport]);
 
   const arrayStats = [
     { title: 'Total Hours', value: `${monthlyReport?.totalTime.hours} hrs ${monthlyReport?.totalTime.minutes} mins` },

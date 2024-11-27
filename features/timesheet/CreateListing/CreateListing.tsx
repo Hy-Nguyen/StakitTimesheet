@@ -11,13 +11,13 @@ export default function CreateListing() {
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white">New Timesheet Entry</h2>
       <div className="flex flex-row gap-4">
         <button
-          className={`rounded-md border p-2 transition-colors duration-200 ${view === 'start' ? 'bg-primary text-primary-foreground' : 'border-border bg-primary-foreground text-black hover:bg-primary/25 dark:text-white'}`}
+          className={`rounded-md border p-2 transition-colors duration-500 ${view === 'start' ? 'bg-primary text-primary-foreground' : 'border-border bg-primary-foreground text-black hover:bg-primary/25 dark:text-white'}`}
           onClick={() => setView('start')}
         >
           Start
         </button>
         <button
-          className={`rounded-md border p-2 transition-colors duration-200 ${view === 'create' ? 'bg-primary text-primary-foreground' : 'border-border bg-primary-foreground text-black hover:bg-primary/25 dark:text-white'}`}
+          className={`rounded-md border p-2 transition-colors duration-500 ${view === 'create' ? 'bg-primary text-primary-foreground' : 'border-border bg-primary-foreground text-black hover:bg-primary/25 dark:text-white'}`}
           onClick={() => {
             setIsOpen((prev) => !prev);
             setView('create');
