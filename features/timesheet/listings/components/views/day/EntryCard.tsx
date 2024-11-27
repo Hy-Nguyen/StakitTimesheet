@@ -6,6 +6,19 @@ import { ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 export default function EntryCard({ entry }: { entry: Entry }) {
   const [expanded, setExpanded] = useState(false);
+
+  const link = entry.meeting_link ? (
+    <a
+      href={entry.meeting_link}
+      target="_blank"
+      className="pl-2 text-sm font-normal text-muted-foreground underline underline-offset-2"
+    >
+      Meeting Recording
+    </a>
+  ) : (
+    <span className="pl-2 text-sm font-normal text-muted-foreground">No Meeting Link</span>
+  );
+
   return (
     <div className="flex w-full flex-col items-center justify-between rounded-md border border-border">
       <div className="flex w-full flex-row items-center justify-between gap-2 p-4">
@@ -26,27 +39,14 @@ export default function EntryCard({ entry }: { entry: Entry }) {
             key={entry.entry_id}
             style={{ overflow: 'hidden' }}
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'fit-content' }}
+            animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            // transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="flex w-full flex-col items-start gap-2 px-4 pb-2"
+            transition={{ duration: 0.5, ease: 'linear' }}
+            className="flex w-full origin-top flex-col items-start justify-start gap-2 px-4 pb-2 transition-none"
           >
             <h2 className="text-sm font-semibold">Description:</h2>
             <p className="line-clamp-4 text-sm font-normal text-muted-foreground">{entry.description}</p>
-            <h2 className="text-sm font-semibold">
-              Meeting Link:
-              {entry.meeting_link ? (
-                <a
-                  href={entry.meeting_link}
-                  target="_blank"
-                  className="pl-2 text-sm font-normal text-muted-foreground underline underline-offset-2"
-                >
-                  Meeting Recording
-                </a>
-              ) : (
-                <span className="pl-2 text-sm font-normal text-muted-foreground">No Meeting Link</span>
-              )}
-            </h2>
+            <h2 className="text-sm font-semibold">Meeting Link: {link}</h2>
           </motion.div>
         )}
       </AnimatePresence>

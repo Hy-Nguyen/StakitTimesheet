@@ -163,7 +163,7 @@ export default function CreateTimeSheetForm({
               </div>
               <button
                 type="submit"
-                className="col-span-4 rounded-md bg-primary py-2 text-primary-foreground transition-colors duration-500 hover:bg-primary/25 disabled:cursor-wait disabled:bg-main-300 disabled:text-black"
+                className="col-span-4 rounded-md bg-primary py-2 text-primary-foreground transition-colors duration-500 hover:bg-muted-foreground disabled:cursor-wait disabled:bg-main-300 disabled:text-black"
                 disabled={isSending}
               >
                 {isSending ? 'Sending...' : 'Submit'}
