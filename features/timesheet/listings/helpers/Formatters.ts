@@ -1,7 +1,8 @@
-export function formatDuration(duration: string) {
+export function formatDuration(duration: string, number = false) {
   if (!duration) return 'Unfinished';
   const [hours, minutes, seconds] = duration.split(':').map(Number);
-  return `${hours + minutes / 60} hrs`;
+  if (number) return (hours + minutes / 60).toFixed(2);
+  return `${(hours + minutes / 60).toFixed(2)} hrs`;
 }
 
 export function formatDate(date: string) {
