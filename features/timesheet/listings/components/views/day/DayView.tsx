@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import EntryCard from './EntryCard';
 export default function DayView() {
   const { entries, selectedDate: date } = useTimesheet();
-  const todayEntries = entries.filter((entry) => new Date(entry.start_time).getDate() === date.getDate());
+  const todayEntries = entries.filter((entry) => new Date(entry.start_time).toLocaleDateString() === date.toLocaleDateString());
   const totalHours = todayEntries.reduce((acc, entry) => acc + convertTimeToMinutes(entry.duration) / 60, 0);
+  console.log(new Date(entries[0].start_time).getDate());
+  console.log(todayEntries);
 
   return (
     <motion.div

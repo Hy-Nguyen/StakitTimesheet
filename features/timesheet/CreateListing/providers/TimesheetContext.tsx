@@ -35,6 +35,10 @@ export interface TimesheetContext {
   categories: Category[];
   setCategories: Dispatch<SetStateAction<Category[]>>;
   resetEntry: () => void;
+  displayMonth: number;
+  setDisplayMonth: Dispatch<SetStateAction<number>>;
+  displayYear: number;
+  setDisplayYear: Dispatch<SetStateAction<number>>;
 }
 
 export const TimesheetContext = createContext<TimesheetContext>({
@@ -72,6 +76,10 @@ export const TimesheetContext = createContext<TimesheetContext>({
   categories: [],
   setCategories: () => {},
   resetEntry: () => {},
+  displayMonth: 11,
+  setDisplayMonth: () => {},
+  displayYear: 2024,
+  setDisplayYear: () => {},
 });
 
 export const useTimesheet = () => {
@@ -105,7 +113,8 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [monthlyReport, setMonthlyReport] = useState<MonthlyReport | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
-
+  const [displayMonth, setDisplayMonth] = useState<number>(todayAtMidnight.getMonth());
+  const [displayYear, setDisplayYear] = useState<number>(todayAtMidnight.getFullYear());
   function resetEntry() {
     setTitle(null);
     setWorkDate(todayAtMidnight);
@@ -186,6 +195,10 @@ export const TimesheetProvider = ({ children }: { children: ReactNode }) => {
         categories,
         setCategories,
         resetEntry,
+        displayMonth,
+        setDisplayMonth,
+        displayYear,
+        setDisplayYear,
       }}
     >
       {children}

@@ -5,24 +5,26 @@ import MonthSelector from './MonthSelector';
 import { motion } from 'framer-motion';
 import { useTimesheet } from '@/features/timesheet/CreateListing/providers/TimesheetContext';
 export default function MonthView() {
-  const { monthlyReport, setMonthlyReport } = useTimesheet();
+  const { monthlyReport, setMonthlyReport, displayMonth, setDisplayMonth, displayYear, setDisplayYear } =
+    useTimesheet();
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
     const getMonthlyReport = async () => {
+      setIsFetching(true);
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/totalHours`, {
-        month: 11,
-        year: 2024,
+        month: displayMonth + 1,
+        year: displayYear,
       });
       setMonthlyReport(response.data);
       setIsFetching(false);
       return;
     };
-    if (!monthlyReport) {
-      getMonthlyReport();
-    }
+
+    getMonthlyReport();
+
     setIsFetching(false);
-  }, [monthlyReport, setMonthlyReport]);
+  }, [displayMonth, displayYear]);
 
   const arrayStats = [
     { title: 'Total Hours', value: `${monthlyReport?.totalTime.hours} hrs ${monthlyReport?.totalTime.minutes} mins` },
