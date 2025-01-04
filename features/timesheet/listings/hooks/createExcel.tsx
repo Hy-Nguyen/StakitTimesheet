@@ -19,9 +19,12 @@ export async function createExcel(
     if (month !== undefined) {
       listings = listings.filter((entry: any) => {
         const entryMonth = new Date(entry.start_time).getMonth() + 1; // getMonth() returns 0-11
+        console.log('entryMonth', entryMonth);
         return entryMonth === month;
       });
     }
+
+    console.log('listings', listings);
 
     // Check if the action result contains data and if it's an array
     if (listings && Array.isArray(listings)) {
